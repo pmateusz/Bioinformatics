@@ -73,7 +73,7 @@ public class LocalAlignmentProblem {
                 final Character rightLabel = right.charAt(column - 1);
                 final Node<Void, DirectionInfo> source = nodes[row - 1][column - 1];
                 final Node<Void, DirectionInfo> destination = nodes[row][column];
-                final int weight = scoringMatrix.getWeight(leftLabel, rightLabel) * -1;
+                final int weight = scoringMatrix.getScore(leftLabel, rightLabel) * -1;
                 graph.addEdge(source, destination, weight, new DirectionInfo(leftLabel, rightLabel, Direction.SouthEast));
             }
         }

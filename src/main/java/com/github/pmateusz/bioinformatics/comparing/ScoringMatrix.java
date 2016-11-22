@@ -13,23 +13,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ScoringMatrix {
+class ScoringMatrix implements IScoringMatrix {
 
     private final Map<Character, Integer> indexMap;
     private final int[][] weightMatrix;
 
-    public ScoringMatrix(Map<Character, Integer> indexMap, int[][] weightMatrix) {
+    private ScoringMatrix(Map<Character, Integer> indexMap, int[][] weightMatrix) {
         this.indexMap = indexMap;
         this.weightMatrix = weightMatrix;
     }
 
-    public int getWeight(Character left, Character right) {
-        final int row = indexMap.get(left);
-        final int column = indexMap.get(right);
-        return weightMatrix[row][column];
-    }
-
-    public static ScoringMatrix load(String resourcePath) throws IOException {
+    static ScoringMatrix load(String resourcePath) throws IOException {
         ClassLoader classLoader = ScoringMatrix.class.getClassLoader();
         URL resourceUrl = classLoader.getResource(resourcePath);
         if (resourceUrl == null) {
@@ -69,5 +63,12 @@ public class ScoringMatrix {
         }
 
         return new ScoringMatrix(indexMap, scoreMatrix);
+    }
+
+    @Override
+    public int getScore(Character left, Character right) {
+        final int row = indexMap.get(left);
+        final int column = indexMap.get(right);
+        return weightMatrix[row][column];
     }
 }
